@@ -757,74 +757,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <div class="price-row"><div class="p-name">Комплект «под ключ», 4 камеры + регистратор</div><div class="p-val">от 25 000 ₽</div></div>
     </div>
 
-    <div class="note-box"><b>Внимание:</b> цены ориентировочные и обновляются автору сайта вручную — актуальную стоимость по вашему объекту уточняйте через форму обратной связи, WhatsApp/Telegram или звонком.</div>
-
-    <div class="calc-panel">
-      <div class="term"><span></span>ЭКСПРЕСС-КАЛЬКУЛЯТОР — ГРУБАЯ ПРИКИДКА, НЕ ЗАМЕНЯЕТ ВЫЕЗД</div>
-      <div class="calc-tabs">
-        <button class="calc-tab active" id="tab-electro" onclick="switchCalc('electro')">Электромонтаж</button>
-        <button class="calc-tab" id="tab-cctv" onclick="switchCalc('cctv')">Видеонаблюдение</button>
-      </div>
-
-      <div class="calc-body" id="calc-electro">
-        <div>
-          <label for="e-points">Количество точек (розетки, выключатели)</label>
-          <input type="number" id="e-points" min="0" value="10" oninput="calcElectro()">
-        </div>
-        <div>
-          <label for="e-cable">Кабель скрытым способом, метров</label>
-          <input type="number" id="e-cable" min="0" value="40" oninput="calcElectro()">
-        </div>
-        <div>
-          <label for="e-panel">Нужна сборка электрощита?</label>
-          <select id="e-panel" onchange="calcElectro()">
-            <option value="0">Не нужна</option>
-            <option value="4500">Да, до 12 модулей</option>
-          </select>
-        </div>
-        <div>
-          <label for="e-ground">Нужно заземление (контур)?</label>
-          <select id="e-ground" onchange="calcElectro()">
-            <option value="0">Не нужно</option>
-            <option value="9000">Да</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="calc-body" id="calc-cctv" style="display:none;">
-        <div>
-          <label for="c-cams">Количество IP-камер</label>
-          <input type="number" id="c-cams" min="0" value="4" oninput="calcCctv()">
-        </div>
-        <div>
-          <label for="c-cable">Кабель видеонаблюдения, метров</label>
-          <input type="number" id="c-cable" min="0" value="50" oninput="calcCctv()">
-        </div>
-        <div>
-          <label for="c-nvr">Нужен регистратор и настройка?</label>
-          <select id="c-nvr" onchange="calcCctv()">
-            <option value="1500">Да</option>
-            <option value="0">Нет, уже есть</option>
-          </select>
-        </div>
-        <div>
-          <label for="c-remote">Удалённый просмотр с телефона?</label>
-          <select id="c-remote" onchange="calcCctv()">
-            <option value="1000">Да, настроить</option>
-            <option value="0">Не нужно</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="calc-result">
-        <div class="r-label">ОРИЕНТИРОВОЧНО ВЫЙДЕТ</div>
-        <div class="r-val" id="calcOut">от 0 ₽</div>
-      </div>
-    </div>
-
-    <div class="btn-row" style="margin-top:32px;">
-      <button class="btn" onclick="goTo('contacts')">Получить точную смету</button>
-    </div>
   </section>
 </div>
 
@@ -892,33 +824,6 @@ function initFromHash(){
 }
 window.addEventListener('hashchange', initFromHash);
 initFromHash();
-
-// ---------- Экспресс-калькулятор ----------
-function switchCalc(kind){
-  document.getElementById('tab-electro').classList.toggle('active', kind==='electro');
-  document.getElementById('tab-cctv').classList.toggle('active', kind==='cctv');
-  document.getElementById('calc-electro').style.display = kind==='electro' ? 'grid' : 'none';
-  document.getElementById('calc-cctv').style.display = kind==='cctv' ? 'grid' : 'none';
-  if(kind==='electro') calcElectro(); else calcCctv();
-}
-function fmt(n){ return n.toLocaleString('ru-RU'); }
-function calcElectro(){
-  const points = Number(document.getElementById('e-points').value) || 0;
-  const cable = Number(document.getElementById('e-cable').value) || 0;
-  const panel = Number(document.getElementById('e-panel').value) || 0;
-  const ground = Number(document.getElementById('e-ground').value) || 0;
-  const total = points*350 + cable*120 + panel + ground;
-  document.getElementById('calcOut').textContent = 'от ' + fmt(total) + ' ₽';
-}
-function calcCctv(){
-  const cams = Number(document.getElementById('c-cams').value) || 0;
-  const cable = Number(document.getElementById('c-cable').value) || 0;
-  const nvr = Number(document.getElementById('c-nvr').value) || 0;
-  const remote = Number(document.getElementById('c-remote').value) || 0;
-  const total = cams*2500 + cable*100 + nvr + remote;
-  document.getElementById('calcOut').textContent = 'от ' + fmt(total) + ' ₽';
-}
-calcElectro();
 
 // ---------- FAQ-аккордеон ----------
 function toggleFaq(btn){
